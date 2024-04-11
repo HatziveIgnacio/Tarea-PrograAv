@@ -17,7 +17,7 @@ public class NewMain {
         // Crear un objeto para manejar las mesas y personas
         RegistroElectoral registroElectoral = new RegistroElectoral();
 
-        // Agregar algunas mesas y personas de ejemplo
+        // Agregar algunas mesas y personas de ejemplo 
         registroElectoral.agregarMesa("A123");
         registroElectoral.agregarMesa("B123");
         registroElectoral.agregarPersona("Ignacio Layana", "21307959-K", "A123");
@@ -40,5 +40,5 @@ public class NewMain {
 
 
 }
-
+//
 
