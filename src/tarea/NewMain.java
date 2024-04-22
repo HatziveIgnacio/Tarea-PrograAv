@@ -1,44 +1,29 @@
-
 package tarea;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/**
- *
- * @author Ignacio
- */
 public class NewMain {
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
+    public static void main(String[] args) {
+        // Cargar las mesas desde el archivo CSV
+        RegistroElectoral.cargarMesasDesdeArchivo("C:\\Users\\Ignacio\\Desktop\\Cosas e universidad\\Proye\\Tarea\\build\\classes\\tarea\\mesas.csv");
 
-        // Crear un objeto para manejar las mesas y personas
-        RegistroElectoral registroElectoral = new RegistroElectoral();
+        try (BufferedReader lector = new BufferedReader(new InputStreamReader(System.in))) {
+            System.out.println("Ingrese su RUT (sin puntos y con guion):");
+            String rut = lector.readLine();
 
-        // Agregar algunas mesas y personas de ejemplo 
-        registroElectoral.agregarMesa("A123");
-        registroElectoral.agregarMesa("B123");
-        registroElectoral.agregarPersona("Ignacio Layana", "21307959-K", "A123");
-        registroElectoral.agregarPersona("Alvaro Del Pino", "12345678-9", "B123");
-
-        // Solicitar el RUT de la persona
-        System.out.println("Ingrese su RUT (sin puntos y con guion):");
-        String rut = lector.readLine();
-
-        // Buscar la mesa de votación para el RUT dado
-        String mesaVotacion = registroElectoral.buscarMesaPorRut(rut);
-        if (mesaVotacion != null) {
-            System.out.println("Usted debe votar en la mesa: " + mesaVotacion);
-        } else {
-            System.out.println("Usted no está registrado para votar.");
+            // Buscar la mesa de votación para el RUT dado
+            String mesaVotacion = RegistroElectoral.buscarMesaPorRut(rut);
+            if (mesaVotacion != null) {
+                System.out.println("Usted debe votar en la mesa: " + mesaVotacion);
+            } else {
+                System.out.println("Usted no está registrado para votar.");
+            }
+        } catch (IOException e) {
+            System.err.println("Error al leer el RUT: " + e.getMessage());
+            e.printStackTrace();
         }
-
-        lector.close();
     }
-
-
 }
-//
-
