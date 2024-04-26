@@ -1,5 +1,6 @@
 package tarea;
 
+import java.util.Collection;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -58,7 +59,22 @@ public class NewMain {
                         }
                         break;
                     case "4":
-                        // Implementación para lista de personas por mesa
+                        System.out.println("Ingrese el código de la mesa:");
+                        String codigoMesa = lector.readLine();
+                        Mesa mesaSeleccionada = RegistroElectoral.getMesas().get(codigoMesa);
+                        if (mesaSeleccionada != null) {
+                            System.out.println("Lista de personas en la mesa " + codigoMesa + ":");
+                            Collection<Persona> personas = mesaSeleccionada.getPersonas();
+                            if (!personas.isEmpty()) {
+                                for (Persona persona : personas) {
+                                    System.out.println("Nombre: " + persona.getNombre() + ", RUT: " + persona.getRut());
+                                }
+                            } else {
+                                System.out.println("No hay personas registradas en la mesa " + codigoMesa + ".");
+                            }
+                        } else {
+                            System.out.println("La mesa con código " + codigoMesa + " no existe.");
+                        }
                         break;
                     case "5":
                         continuar = false;
