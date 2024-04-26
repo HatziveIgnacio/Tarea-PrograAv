@@ -3,6 +3,8 @@ package tarea;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NewMain {
 
@@ -37,7 +39,23 @@ public class NewMain {
                         // Implementación para buscar por región
                         break;
                     case "3":
-                        // Implementación para eliminar persona registrada
+                        System.out.println("Ingrese el RUT de la persona a eliminar (sin puntos y con guion):");
+                        String rutEliminar = lector.readLine();
+                        boolean personaEliminada = false;
+                        Map<String, Mesa> mesas = RegistroElectoral.getMesas();
+                        for (Mesa mesa : mesas.values()) {
+                            Persona persona = mesa.getPersona(rutEliminar);
+                            if (persona != null) {
+                                mesa.removePersona(rutEliminar);
+                                personaEliminada = true;
+                                break; // Persona encontrada y eliminada, salir del bucle
+                            }
+                        }
+                        if (personaEliminada) {
+                            System.out.println("La persona con RUT " + rutEliminar + " fue eliminada correctamente.");
+                        } else {
+                            System.out.println("La persona con RUT " + rutEliminar + " no se encontró en ninguna mesa.");
+                        }
                         break;
                     case "4":
                         // Implementación para lista de personas por mesa
