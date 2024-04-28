@@ -11,7 +11,7 @@ public class NewMain {
 
     public static void main(String[] args) {
         // Cargar las mesas desde el archivo CSV
-        RegistroElectoral.cargarMesasDesdeArchivo("C:\\Users\\Ignacio\\Desktop\\Cosas e universidad\\Proye\\Tarea\\build\\classes\\tarea\\mesas.csv");
+        RegistroElectoral.cargarMesasDesdeArchivo("C:\\Users\\Ignacio\\Desktop\\Cosas e universidad\\Proye\\mesas.csv");
         boolean continuar = true;
         try (BufferedReader lector = new BufferedReader(new InputStreamReader(System.in))) {
             while (continuar) {
@@ -29,15 +29,17 @@ public class NewMain {
                         System.out.println("Ingrese su RUT (sin puntos y con guion):");
                         String rut = lector.readLine();
                         // Buscar la mesa de votación para el RUT dado
-                        String mesaVotacion = RegistroElectoral.buscarMesaPorRut(rut);
-                        if (mesaVotacion != null) {
-                            System.out.println("Usted debe votar en la mesa: " + mesaVotacion);
+                        String[] mesaYRegion = RegistroElectoral.buscarMesaPorRut(rut);
+                        if (mesaYRegion != null) {
+                            System.out.println("Usted debe votar en la mesa: " + mesaYRegion[0] + ", en la " + mesaYRegion[1]);
                         } else {
                             System.out.println("Usted no está registrado para votar.");
                         }
                         break;
                     case "2":
-                        // Implementación para buscar por región
+                        System.out.println("Ingrese el nombre de la región: (Ejemplo de entada: Región de Valparaíso)"); // SE DEBE INGRESAR DE ESTA FORNA: Región de Valparaíso
+                        String region = lector.readLine();
+                        RegistroElectoral.buscarPersonasPorRegion(region);
                         break;
                     case "3":
                         System.out.println("Ingrese el RUT de la persona a eliminar (sin puntos y con guion):");
