@@ -21,7 +21,8 @@ public class RegistroElectoral {
                 String nombre = datos[0];
                 String rut = datos[1];
                 String codigoMesa = datos[2];
-                agregarPersona(nombre, rut, codigoMesa);
+                String region = datos[3]; // Se agrega la región
+                agregarPersona(nombre, rut, codigoMesa, region); // Se pasa la región al método agregarPersona
             }
         } catch (IOException e) {
             System.err.println("Error al cargar las mesas desde el archivo CSV: " + e.getMessage());
@@ -29,27 +30,49 @@ public class RegistroElectoral {
         }
     }
 
-    public static void agregarPersona(String nombre, String rut, String codigoMesa) {
+
+    public static String[] buscarMesaPorRut(String rut) {
+        System.out.println("Buscando RUT: " + rut);
+        String[] resultado = new String[2]; // Array para almacenar el código de la mesa y la región
+        for (Mesa mesa : mesas.values()) {
+            Persona persona = mesa.getPersona(rut);
+            if (persona != null) {
+                System.out.println("RUT encontrado en la mesa: " + mesa.getCodigo());
+                resultado[0] = mesa.getCodigo(); // Almacena el código de la mesa
+                resultado[1] = persona.getRegion(); // Almacena la región
+                return resultado;
+            }
+        }
+        System.out.println("RUT no encontrado en ninguna mesa.");
+        return null;
+    }
+    
+    public static void agregarPersona(String nombre, String rut, String codigoMesa, String region) {
         Mesa mesa = mesas.get(codigoMesa);
         if (mesa == null) {
             mesa = new Mesa(codigoMesa);
             mesas.put(codigoMesa, mesa);
         }
         Persona persona = new Persona();
-        persona.setPersona(nombre, rut, codigoMesa);
+        persona.setPersona(nombre, rut, codigoMesa, region); // Se pasa la región como parámetro
         mesa.addPersona(persona);
     }
-
-    public static String buscarMesaPorRut(String rut) {
-        System.out.println("Buscando RUT: " + rut);
+    
+    public static void buscarPersonasPorRegion(String region) {
+        boolean personasEncontradas = false;
         for (Mesa mesa : mesas.values()) {
-            Persona persona = mesa.getPersona(rut);
-            if (persona != null) {
-                System.out.println("RUT encontrado en la mesa: " + mesa.getCodigo());
-                return mesa.getCodigo();
+            for (Persona persona : mesa.getPersonas()) {
+                if (persona.getRegion().equalsIgnoreCase(region)) {
+                    if (!personasEncontradas) {
+                        System.out.println("Personas registradas en la región " + region + ":");
+                        personasEncontradas = true;
+                    }
+                    System.out.println("Nombre: " + persona.getNombre() + ", RUT: " + persona.getRut() + ", Mesa: " + mesa.getCodigo());
+                }
             }
         }
-        System.out.println("RUT no encontrado en ninguna mesa.");
-        return null;
+        if (!personasEncontradas) {
+            System.out.println("No se encontraron personas registradas en la región " + region + ".");
+        }
     }
 }
