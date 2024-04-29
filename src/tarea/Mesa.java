@@ -1,16 +1,16 @@
 package tarea;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Mesa {
     private String codigo;
-    private Map<String, Persona> personas;
+    private List<Persona> personas;
 
     public Mesa(String codigo) {
         this.codigo = codigo;
-        this.personas = new HashMap<>();
+        this.personas = new ArrayList<>();
     }
 
     public String getCodigo() {
@@ -18,22 +18,26 @@ public class Mesa {
     }
 
     public void addPersona(Persona persona) {
-        personas.put(persona.getRut(), persona);
+        personas.add(persona);
     }
 
     public Persona getPersona(String rut) {
-        return personas.get(rut);
+        for (Persona persona : personas) {
+            if (persona.getRut().equals(rut)) {
+                return persona;
+            }
+        }
+        return null;
     }
 
     public void removePersona(String rut) {
-        personas.remove(rut);
+        personas.removeIf(persona -> persona.getRut().equals(rut));
     }
 
-    public Collection<Persona> getPersonas() {
-        return personas.values();
+    public List<Persona> getPersonas() {
+        return personas;
     }
 
-    // Método para verificar si el mapa de personas contiene valores
     public boolean contienePersonas() {
         return !personas.isEmpty();
     }

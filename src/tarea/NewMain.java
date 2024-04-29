@@ -1,17 +1,20 @@
 package tarea;
-
+/*
 import java.util.Collection;
 import java.io.BufferedReader;
-import java.io.IOException;
+*/
+//import java.io.IOException;
+/*
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-
+*/
 public class NewMain {
 
     public static void main(String[] args) {
         // Cargar las mesas desde el archivo CSV
-        RegistroElectoral.cargarMesasDesdeArchivo("C:\\Users\\Ignacio\\Desktop\\Cosas e universidad\\Proye\\mesas.csv");
+        RegistroElectoral.cargarMesasDesdeArchivo("C:\\Users\\alvar\\Downloads\\Tarea-PrograAv-Rama-de-netBeans\\src\\tarea\\mesas.csv");       
+       /*
         boolean continuar = true;
         try (BufferedReader lector = new BufferedReader(new InputStreamReader(System.in))) {
             while (continuar) {
@@ -86,9 +89,16 @@ public class NewMain {
                         break;
                 }
             }
-        } catch (IOException e) {
-            System.err.println("Error al leer la entrada del usuario: " + e.getMessage());
-            e.printStackTrace();
+        
         }
+        catch (IOException e) {
+                System.err.println("Error al leer la entrada del usuario: " + e.getMessage());
+                e.printStackTrace();
+                }
+        */ 
+        ventana ventana = new ventana();
+        ventana.setVisible(true);
+        ventana.setLocationRelativeTo(null);       
     }
 }
+

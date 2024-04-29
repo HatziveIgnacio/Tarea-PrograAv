@@ -16,8 +16,8 @@ public class RegistroElectoral {
     public static void cargarMesasDesdeArchivo(String nombreArchivo) {
         try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
             String linea;
-            while ((linea = br.readLine()) != null) {
-                String[] datos = linea.split(", ");
+            while ((linea = br.readLine()) != null) {                
+                String[] datos = linea.split(", ");                
                 String nombre = datos[0];
                 String rut = datos[1];
                 String codigoMesa = datos[2];
@@ -58,21 +58,23 @@ public class RegistroElectoral {
         mesa.addPersona(persona);
     }
     
-    public static void buscarPersonasPorRegion(String region) {
-        boolean personasEncontradas = false;
-        for (Mesa mesa : mesas.values()) {
-            for (Persona persona : mesa.getPersonas()) {
-                if (persona.getRegion().equalsIgnoreCase(region)) {
-                    if (!personasEncontradas) {
-                        System.out.println("Personas registradas en la región " + region + ":");
-                        personasEncontradas = true;
-                    }
-                    System.out.println("Nombre: " + persona.getNombre() + ", RUT: " + persona.getRut() + ", Mesa: " + mesa.getCodigo());
+    public static String buscarPersonasPorRegion(String region) {
+    StringBuilder resultado = new StringBuilder();
+    boolean personasEncontradas = false;
+    for (Mesa mesa : mesas.values()) {
+        for (Persona persona : mesa.getPersonas()) {
+            if (persona.getRegion().equalsIgnoreCase(region)) {
+                if (!personasEncontradas) {
+                    resultado.append("Personas registradas en la región ").append(region).append(":\n");
+                    personasEncontradas = true;
                 }
+                resultado.append("Nombre: ").append(persona.getNombre()).append(", RUT: ").append(persona.getRut()).append(", Mesa: ").append(mesa.getCodigo()).append("\n");
             }
         }
-        if (!personasEncontradas) {
-            System.out.println("No se encontraron personas registradas en la región " + region + ".");
-        }
     }
+    if (!personasEncontradas) {
+        resultado.append("Ingrese la region de esta manera especifica (Región de Valparaíso) ");
+    }
+    return resultado.toString();
+}
 }
